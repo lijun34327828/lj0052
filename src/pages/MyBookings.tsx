@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, CalendarX, ArrowLeft, Users, Clock } from 'lucide-react'
 import { useStore } from '@/store'
@@ -101,8 +101,18 @@ export default function MyBookings() {
   const [phone, setPhone] = useState('')
   const [searched, setSearched] = useState(false)
 
+  useEffect(() => {
+    const savedPhone = localStorage.getItem('bookingPhone')
+    if (savedPhone && !searched) {
+      setPhone(savedPhone)
+      fetchBookings(savedPhone)
+      setSearched(true)
+    }
+  }, [fetchBookings, searched])
+
   const handleSearch = () => {
     if (!phone.trim()) return
+    localStorage.setItem('bookingPhone', phone.trim())
     fetchBookings(phone.trim())
     setSearched(true)
   }

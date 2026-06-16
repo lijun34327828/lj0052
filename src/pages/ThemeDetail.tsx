@@ -127,6 +127,7 @@ export default function ThemeDetail() {
         player_count: playerCount,
       })
       setShowSuccess(true)
+      localStorage.setItem('bookingPhone', phone.trim())
       setTimeout(() => {
         navigate('/my-bookings')
       }, 1500)
